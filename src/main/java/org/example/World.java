@@ -64,7 +64,7 @@ public class World {
     public Optional<Organism> getOrganismFromPosition(Position pos) {
         // TODO: Optimize.
         for (int i = 0; i < organisms.size(); i++) {
-            if (organisms.get(i).pos == pos) {
+            if (organisms.get(i).pos.equals(pos)) {
                 return Optional.of(organisms.get(i));
             }
         }
