@@ -1,15 +1,14 @@
 package org.example;
 
-import org.example.Organisms.Factory;
+import org.example.Actions.Action;
+import org.example.Actions.Dispatcher;
 import org.example.Organisms.Organism;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static java.util.List.of;
 
-public class World {
+public class World implements Dispatcher.Observer {
 
     private int worldX;
     private int worldY;
@@ -19,19 +18,12 @@ public class World {
 
     private final char emptySpace;
 
-    public final Factory organismFactory;
-
     public World(int worldX, int worldY) {
         this.worldX = worldX;
         this.worldY = worldY;
         this.turn = 0;
         this.organisms = new ArrayList<>();
         this.emptySpace = ' ';
-        this.organismFactory = new Factory(this);
-    }
-
-    public void addOrganism(Organism org) {
-        this.organisms.add(org);
     }
 
     public boolean isBound(Position pos) {
@@ -48,6 +40,10 @@ public class World {
         ArrayList<Position> ret = new ArrayList<>();
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
+                // Early out.
+                if (x == pos.getX() && y == pos.getY()) {
+                    continue;
+                }
                 Position posToCheck = pos.cloneRelative(x, y);
                 if (!isBound(posToCheck)) {
                     continue;
@@ -83,10 +79,6 @@ public class World {
         this.turn++;
     }
 
-    public void removeOrganism(Organism org) {
-        this.organisms.remove(org);
-    }
-
     public void print() {
         System.out.println("Turn: " + this.turn);
         for (int y = 0; y < worldY; y++) {
@@ -99,6 +91,15 @@ public class World {
                 System.out.print(org.get().sign);
             }
             System.out.println();
+        }
+    }
+
+    public void update(Action action) {
+        switch (action.type) {
+            case KILL:
+                this.organisms.remove(action.related);
+            case REPRODUCE:
+                this.organisms.add(action.related);
         }
     }
 }

@@ -1,5 +1,7 @@
 package org.example.Organisms;
 
+import org.example.Actions.Action;
+import org.example.Actions.Dispatcher;
 import org.example.Position;
 import org.example.World;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Grass extends Plant {
-    public Grass(World world, Position pos) {
+    public Grass(World world, Dispatcher dispatcher, Factory factory, Position pos) {
         this.pos = pos;
         this.power = 0;
         this.initiative = 0;
@@ -15,6 +17,8 @@ public class Grass extends Plant {
         this.powerToReproduce = 3;
         this.sign = 'G';
         this.world = world;
+        this.dispatcher = dispatcher;
+        this.factory = factory;
     }
 
     @Override
@@ -23,10 +27,7 @@ public class Grass extends Plant {
         if (freePos.size() == 0) {
             return;
         }
-        world.addOrganism(
-                world.organismFactory.create("Grass", freePos.get(
-                        ThreadLocalRandom.current().nextInt(0, freePos.size()))
-                )
-        );
+        this.dispatcher.dispatch(new Action(Action.ActionType.REPRODUCE, this, this.factory.create("Grass", freePos.get(
+                ThreadLocalRandom.current().nextInt(0, freePos.size())))));
     }
 }
