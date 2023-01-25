@@ -16,7 +16,6 @@ public class Position {
         return this.y;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -29,4 +28,9 @@ public class Position {
         final Position other = (Position) obj;
         return (this.x == other.x && this.y == other.y);
     }
+
+    public Position cloneRelative(int relX, int relY) {
+        return new Position(this.x + relX, this.y + relY);
+    }
+
 }
