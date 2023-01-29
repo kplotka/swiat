@@ -61,6 +61,23 @@ public class World {
         return ret;
     }
 
+    public ArrayList<Position> neighbourPositions(Position pos) {
+        ArrayList<Position> ret = new ArrayList<>();
+        for (int x = -1; x < 2; x++) {
+            for (int y = -1; y < 2; y++) {
+                Position posToCheck = pos.cloneRelative(x, y);
+                if (pos.equals(posToCheck)){
+                    continue;
+                }
+                if (!isBound(posToCheck)) {
+                    continue;
+                }
+                ret.add(posToCheck);
+            }
+        }
+        return ret;
+    }
+
     public Optional<Organism> getOrganismFromPosition(Position pos) {
         // TODO: Optimize.
         for (int i = 0; i < organisms.size(); i++) {
