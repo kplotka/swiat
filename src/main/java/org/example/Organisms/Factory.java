@@ -17,6 +17,14 @@ public class Factory {
         switch (type) {
             case "Grass":
                 return new Grass(this.world, this.dispatcher, this, pos);
+            case "Sheep":
+                return new Sheep(this.world, this.dispatcher, this, pos);
+            case "Dandelion":
+                return new Dandelion(this.world, this.dispatcher, this, pos);
+            case "Wolf":
+                return new Wolf(this.world, this.dispatcher, this, pos);
+            case "Toadstool":
+                return new Toadstool(this.world, this.dispatcher, this, pos);
         }
         throw new Exception("no such type");
     }

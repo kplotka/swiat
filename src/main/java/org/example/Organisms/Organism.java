@@ -5,6 +5,10 @@ import org.example.Actions.Dispatcher;
 import org.example.Position;
 import org.example.World;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public abstract class Organism implements Dispatcher.Observer {
     public int power;
@@ -20,6 +24,10 @@ public abstract class Organism implements Dispatcher.Observer {
 
     public void live() throws Exception {
         return;
+    }
+
+    public boolean canKill(Organism victim) {
+        return (this.power > victim.power);
     }
 
     public void progressTime() {
@@ -48,4 +56,6 @@ public abstract class Organism implements Dispatcher.Observer {
         return getClass().getName() + "[" + pos.getX() + "," + pos.getY() + "]";
     }
 }
+
+
 
