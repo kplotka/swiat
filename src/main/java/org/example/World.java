@@ -3,6 +3,7 @@ package org.example;
 import org.example.Actions.Action;
 import org.example.Actions.Dispatcher;
 import org.example.Organisms.Organism;
+import org.example.Organisms.SortByInitiative;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,12 +11,11 @@ import java.util.Optional;
 
 
 public class World implements Dispatcher.Observer {
-
     private int worldX;
     private int worldY;
     private int turn;
 
-    private ArrayList<Organism> organisms;
+    public ArrayList<Organism> organisms;
 
     private final char emptySpace;
 
@@ -114,12 +114,13 @@ public class World implements Dispatcher.Observer {
 
     public void update(Action action) {
         switch (action.type) {
-            case KILL:
+            case KILL -> {
                 this.organisms.remove(action.related);
-            case REPRODUCE:
+            }
+            case REPRODUCE -> {
                 this.organisms.add(action.related);
-              //Collections.sort(this.organisms, Organisms.SortByInitiative);
-
+                Collections.sort(this.organisms, new SortByInitiative());
+            }
         }
     }
 }

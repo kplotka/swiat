@@ -33,15 +33,10 @@ public class Toadstool extends Plant {
                     ThreadLocalRandom.current().nextInt(0, freePos.size())))));
             this.power=this.power/2;
         }
+    }
 
-        ArrayList<Position> nPos = world.neighbourPositions(this.pos);
-        Position target = nPos.get(ThreadLocalRandom.current().nextInt(0, nPos.size()));
-
-        Optional<Organism> org = world.getOrganismFromPosition(pos);
-
-        if (org.isPresent()){
-            this.dispatcher.dispatch(new Action(Action.ActionType.KILL, this, org.get()));
-        }
-
+    @Override
+    public boolean canKill(Organism victim) {
+        return true;
     }
 }

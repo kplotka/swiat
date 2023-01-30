@@ -33,4 +33,9 @@ public class Grass extends Plant {
             this.power=this.power/2;
         }
     }
+
+    @Override
+    public boolean canKill(Organism victim) {
+        return false;
+    }
 }

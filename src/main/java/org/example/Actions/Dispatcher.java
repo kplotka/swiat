@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Dispatcher {
     public interface Observer {
-        public void update(Action action);
+        void update(Action action);
     }
 
     private ArrayList<Observer> observers = new ArrayList<>();
